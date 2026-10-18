@@ -11,14 +11,37 @@
   --gold-dark: #8c6a35;
   --espresso: #22160f;
   --line: #e2d5c2;
+  --gold-light: #d9b77e;
+  --on-dark: #d8cbb8;
+  --on-dark-strong: #e6dacb;
+  --on-dark-muted: #a8998a;
   --whatsapp: #25d366;
 
   --font-head: "Playfair Display", Georgia, serif;
   --font-body: "Lato", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   --radius: 14px;
-  --shadow: 0 10px 30px rgba(43, 29, 20, 0.08);
+  --shadow: 0 10px 30px color-mix(in srgb, var(--ink) 8%, transparent);
   --header-h: 72px;
+}
+
+/* Color themes: js/theme-preview.js sets --c-light, --c-dark and --c-accent
+   on <html>; every other tone is mixed from those 3 colors.
+   No data-theme attribute = the original "Klasik" palette above. */
+html[data-theme] {
+  --cream: var(--c-light);
+  --cream-dark: color-mix(in srgb, var(--c-light) 90%, var(--c-accent));
+  --paper: color-mix(in srgb, var(--c-light) 45%, white);
+  --ink: var(--c-dark);
+  --ink-soft: color-mix(in srgb, var(--c-dark) 78%, var(--c-light));
+  --gold: var(--c-accent);
+  --gold-dark: color-mix(in srgb, var(--c-accent) 72%, var(--c-dark));
+  --gold-light: color-mix(in srgb, var(--c-accent) 65%, white);
+  --espresso: color-mix(in srgb, var(--c-dark) 82%, black);
+  --line: color-mix(in srgb, var(--c-light) 84%, var(--c-dark));
+  --on-dark: color-mix(in srgb, var(--c-light) 82%, var(--c-dark));
+  --on-dark-strong: color-mix(in srgb, var(--c-light) 90%, var(--c-dark));
+  --on-dark-muted: color-mix(in srgb, var(--c-light) 58%, var(--c-dark));
 }
 
 /* ==========================================================
@@ -112,7 +135,7 @@ p { margin: 0 0 1em; }
   top: 0;
   z-index: 50;
   height: var(--header-h);
-  background: rgba(247, 241, 232, 0.92);
+  background: color-mix(in srgb, var(--cream) 92%, transparent);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s, box-shadow 0.3s;
@@ -120,7 +143,7 @@ p { margin: 0 0 1em; }
 
 .site-header.scrolled {
   border-color: var(--line);
-  box-shadow: 0 4px 20px rgba(43, 29, 20, 0.05);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--ink) 5%, transparent);
 }
 
 .header-inner {
@@ -343,8 +366,8 @@ p { margin: 0 0 1em; }
   gap: 14px;
   padding: 16px;
   text-align: center;
-  color: #d8cbb8;
-  background: radial-gradient(circle at 30% 30%, #5c4a3d, var(--espresso) 70%);
+  color: var(--on-dark);
+  background: radial-gradient(circle at 30% 30%, var(--ink-soft), var(--espresso) 70%);
   font-family: var(--font-head);
   font-size: 1.2rem;
 }
@@ -380,7 +403,7 @@ p { margin: 0 0 1em; }
 .format {
   padding: 20px 24px;
   border-left: 3px solid var(--gold);
-  background: rgba(255, 251, 245, 0.6);
+  background: color-mix(in srgb, var(--paper) 60%, transparent);
   border-radius: 0 var(--radius) var(--radius) 0;
 }
 
@@ -469,7 +492,7 @@ p { margin: 0 0 1em; }
 .cards--ust .card-media + .card-body .lesson-icon {
   margin-top: -28px;
   background: var(--paper);
-  box-shadow: 0 0 0 4px var(--paper), 0 6px 16px rgba(43, 29, 20, 0.15);
+  box-shadow: 0 0 0 4px var(--paper), 0 6px 16px color-mix(in srgb, var(--ink) 15%, transparent);
 }
 
 /* Card design "arka": blurred photo behind the text */
@@ -495,23 +518,23 @@ p { margin: 0 0 1em; }
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(34, 22, 15, 0.35) 0%, rgba(34, 22, 15, 0.85) 65%, rgba(34, 22, 15, 0.95) 100%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--espresso) 35%, transparent) 0%, color-mix(in srgb, var(--espresso) 85%, transparent) 65%, color-mix(in srgb, var(--espresso) 95%, transparent) 100%);
 }
 
 .cards--arka .card:hover .card-media img { filter: blur(3px) saturate(1.1); }
 
 .cards--arka .card-body { padding-top: 120px; }
-.cards--arka .card-body > p { color: #e6dacb; }
-.cards--arka .levels { color: #d9b77e; }
+.cards--arka .card-body > p { color: var(--on-dark-strong); }
+.cards--arka .levels { color: var(--gold-light); }
 
 .cards--arka .lesson-icon {
-  background: rgba(247, 241, 232, 0.15);
-  border: 1px solid rgba(247, 241, 232, 0.3);
+  background: color-mix(in srgb, var(--cream) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--cream) 30%, transparent);
   backdrop-filter: blur(4px);
 }
 
-.cards--arka .tags { border-top-color: rgba(247, 241, 232, 0.2); }
-.cards--arka .tag { color: var(--cream); border-color: rgba(247, 241, 232, 0.5); }
+.cards--arka .tags { border-top-color: color-mix(in srgb, var(--cream) 20%, transparent); }
+.cards--arka .tag { color: var(--cream); border-color: color-mix(in srgb, var(--cream) 50%, transparent); }
 
 .price-box {
   margin: 48px auto 0;
@@ -587,7 +610,7 @@ p { margin: 0 0 1em; }
 /* Contact */
 .section-dark { background: var(--espresso); color: var(--cream); }
 .section-dark .eyebrow { color: var(--gold); }
-.section-dark p { color: #d8cbb8; }
+.section-dark p { color: var(--on-dark); }
 
 .contact-grid { display: grid; gap: 48px; align-items: center; }
 
@@ -597,7 +620,7 @@ p { margin: 0 0 1em; }
   display: grid;
   gap: 2px;
   padding: 18px 0;
-  border-bottom: 1px solid rgba(247, 241, 232, 0.15);
+  border-bottom: 1px solid color-mix(in srgb, var(--cream) 15%, transparent);
 }
 
 .contact-list .label {
@@ -618,7 +641,7 @@ p { margin: 0 0 1em; }
 /* ==========================================================
    Footer
    ========================================================== */
-.site-footer { background: var(--espresso); color: #a8998a; border-top: 1px solid rgba(247, 241, 232, 0.1); }
+.site-footer { background: var(--espresso); color: var(--on-dark-muted); border-top: 1px solid color-mix(in srgb, var(--cream) 10%, transparent); }
 
 .footer-inner {
   display: flex;
@@ -647,7 +670,7 @@ p { margin: 0 0 1em; }
   display: grid;
   place-items: center;
   padding: 16px;
-  background: rgba(20, 13, 9, 0.92);
+  background: color-mix(in srgb, var(--espresso) 92%, transparent);
   cursor: zoom-out;
 }
 
@@ -685,3 +708,41 @@ p { margin: 0 0 1em; }
 
 /* Keyboard focus */
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+/* ==========================================================
+   TEMPORARY theme preview switcher (remove with js/theme-preview.js)
+   ========================================================== */
+.theme-preview {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 90;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 8px 10px 8px 14px;
+  border: 1.5px solid var(--ink);
+  border-radius: 22px;
+  background: var(--cream);
+  box-shadow: var(--shadow);
+  font: 700 0.75rem var(--font-body);
+  color: var(--ink);
+}
+
+.theme-preview-label { flex-basis: 100%; margin-bottom: 2px; }
+.theme-preview-label small { font-weight: 400; color: var(--ink-soft); }
+
+.theme-preview button {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--sw-dark) 0 50%, var(--sw-accent) 50% 100%);
+  box-shadow: inset 0 0 0 2px var(--sw-light);
+}
+
+.theme-preview button[aria-pressed="true"] { border-color: var(--ink); transform: scale(1.12); }

@@ -222,6 +222,8 @@ function renderIntro(lang) {
   if (id) {
     const iframe = el("iframe");
     iframe.src = "https://www.youtube-nocookie.com/embed/" + id + "?rel=0";
+    // YouTube needs the page address (referrer), otherwise it shows "Error 153"
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
     iframe.title = pick(intro.title, lang);
     iframe.loading = "lazy";
     iframe.allow = "accelerometer; encrypted-media; gyroscope; picture-in-picture";
