@@ -4,7 +4,8 @@
  * Write {name} anywhere to insert the teacher's name.
  *
  * PHOTOS: put photos in the images/ folder with the names written below
- * (images/ana-gorsel.jpg, images/ogretmen.jpg, images/galeri-1.jpg ...).
+ * (images/ana-gorsel.jpg, images/ogretmen.jpg, images/galeri-1.jpg ...,
+ * lesson cards: images/ders-piyano.jpg, ders-gitar.jpg, ders-san.jpg, ders-ukulele.jpg).
  * Until a photo exists, a brown placeholder showing the expected file name appears.
  * Names are case-sensitive online: use lowercase .jpg, not .JPG.
  * Keep the quotes and commas intact; the last item in a list has no comma.
@@ -102,6 +103,8 @@ const SITE_CONTENT = {
       "tr": "Tüm dersler birebir yapılır. İlk ders ücretsiz tanışma dersidir.",
       "en": "All lessons are one-on-one. The first lesson is a free introductory lesson."
     },
+    // Card design: "ust" = photo on top of the card, "arka" = blurred photo behind the text
+    "cardStyle": "ust",
     "onlineLabel": { "tr": "Online", "en": "Online" },
     "inPersonLabel": { "tr": "Yüz yüze", "en": "In person" },
 
@@ -125,6 +128,7 @@ const SITE_CONTENT = {
     "items": [
       {
         "icon": "🎹",
+        "image": "images/ders-piyano.jpg",
         "title": { "tr": "Piyano", "en": "Piano" },
         "description": {
           "tr": "Nota okuma, teknik ve sevdiğiniz parçalar. Klasikten popa geniş repertuvar.",
@@ -136,6 +140,7 @@ const SITE_CONTENT = {
       },
       {
         "icon": "🎸",
+        "image": "images/ders-gitar.jpg",
         "title": { "tr": "Gitar", "en": "Guitar" },
         "description": {
           "tr": "Akor, ritim ve solo teknikleri. Klasik veya akustik gitar.",
@@ -147,6 +152,7 @@ const SITE_CONTENT = {
       },
       {
         "icon": "🎤",
+        "image": "images/ders-san.jpg",
         "title": { "tr": "Şan", "en": "Voice / Singing" },
         "description": {
           "tr": "Nefes, ses açma, diksiyon ve doğru ses kullanımı. Konservatuvar sınavlarına hazırlık.",
@@ -158,6 +164,7 @@ const SITE_CONTENT = {
       },
       {
         "icon": "🎶",
+        "image": "images/ders-ukulele.jpg",
         "title": { "tr": "Ukulele", "en": "Ukulele" },
         "description": {
           "tr": "Öğrenmesi en kolay ve keyifli enstrümanlardan biri. Kısa sürede sevdiğiniz şarkılara eşlik edin.",

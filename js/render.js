@@ -78,29 +78,57 @@ function renderLessons(lang) {
     return box;
   }));
 
+  // Card design: "ust" = photo on top, "arka" = blurred photo behind the text.
+  // ?kart=ust or ?kart=arka in the address overrides it, for comparing.
+  const param = new URLSearchParams(location.search).get("kart");
+  const style = ["ust", "arka"].includes(param) ? param : (lessons.cardStyle || "ust");
+
   const cards = document.getElementById("lesson-cards");
+  cards.className = "cards cards--" + style;
   cards.replaceChildren(...lessons.items.map((item) => {
     const card = el("article", "card reveal");
-    if (item.icon) card.append(el("span", "lesson-icon", item.icon));
-    card.append(el("h3", "", pick(item.title, lang)));
-    if (item.levels) card.append(el("p", "levels", pick(item.levels, lang)));
-    card.append(el("p", "", pick(item.description, lang)));
+
+    if (item.image) {
+      const media = el("div", "card-media");
+      const img = el("img");
+      img.alt = "";
+      img.loading = "lazy";
+      setImage(img, item.image, lessonPlaceholder(item.image));
+      media.append(img);
+      card.append(media);
+    }
+
+    const body = el("div", "card-body");
+    if (item.icon) body.append(el("span", "lesson-icon", item.icon));
+    body.append(el("h3", "", pick(item.title, lang)));
+    if (item.levels) body.append(el("p", "levels", pick(item.levels, lang)));
+    body.append(el("p", "", pick(item.description, lang)));
 
     const tags = el("div", "tags");
     if (item.inPerson) tags.append(el("span", "tag", pick(lessons.inPersonLabel, lang)));
     if (item.online) tags.append(el("span", "tag", pick(lessons.onlineLabel, lang)));
-    if (tags.children.length) card.append(tags);
+    if (tags.children.length) body.append(tags);
+
+    card.append(body);
     return card;
   }));
 }
 
+// images/ders-piyano.jpg -> images/placeholders/ders-piyano.svg (falls back to a generic one)
+function lessonPlaceholder(src) {
+  const name = src.split("/").pop().replace(/\.[^.]+$/, "");
+  return ["images/placeholders/" + name + ".svg", "images/placeholders/ders.svg"];
+}
+
 // Shows the photo, or the placeholder if the photo file isn't uploaded yet
+// (placeholder can also be a list, tried in order)
 function setImage(img, src, placeholder) {
+  const fallbacks = [].concat(placeholder);
   img.onerror = () => {
-    img.onerror = null;
-    img.src = placeholder;
+    if (fallbacks.length) img.src = fallbacks.shift();
+    else img.onerror = null;
   };
-  img.src = src || placeholder;
+  img.src = src || fallbacks.shift();
 }
 
 function renderImages(lang) {

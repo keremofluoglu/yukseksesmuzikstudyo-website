@@ -67,6 +67,15 @@ Each lesson is one block in `lessons.items`. To add a lesson, copy a block, put 
 - To remove a lesson, delete its block, including the comma before it.
 - Emoji ideas for `icon`: 🎹 🎸 🎤 🎻 🥁 🎺 🎷 🪕 🪗
 
+`image` is the card's photo. Remove the line to show the card without a photo.
+
+### Lesson card design
+`lessons.cardStyle` in `content.js` picks how the photo appears:
+- `"ust"`: the photo sits across the top of the card.
+- `"arka"`: a blurred photo covers the whole card, with the text on top.
+
+To compare them without editing anything, open `index.html?kart=ust` or `index.html?kart=arka` (this also works on the live site).
+
 Prices are not shown. The "call or message for prices" box text is in `priceTitle` and `priceText`.
 
 ### Photos
@@ -77,6 +86,7 @@ All photo file names are set in `content.js`. Put photos in the `images/` folder
 | `images/ana-gorsel.jpg` | large photo at the top |
 | `images/ogretmen.jpg` | About section |
 | `images/galeri-1.jpg` … `galeri-6.jpg` | gallery |
+| `images/ders-piyano.jpg`, `ders-gitar.jpg`, `ders-san.jpg`, `ders-ukulele.jpg` | lesson cards |
 
 - Until a photo exists, a brown placeholder showing the expected file name appears in its place.
 - Names are case-sensitive once online: use lowercase `.jpg`. `Galeri-1.JPG` won't be found.
