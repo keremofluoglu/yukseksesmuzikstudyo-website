@@ -15,6 +15,26 @@ nav.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", () => setMenu(false));
 });
 
+// Dark mode toggle (the starting mode is set by the inline script in <head>)
+const modeToggle = document.querySelector(".mode-toggle");
+
+function updateModeToggle() {
+  modeToggle.setAttribute("aria-pressed", String(document.documentElement.dataset.mode === "dark"));
+}
+
+modeToggle.addEventListener("click", () => {
+  const dark = document.documentElement.dataset.mode !== "dark";
+  if (dark) document.documentElement.dataset.mode = "dark";
+  else delete document.documentElement.dataset.mode;
+  try {
+    localStorage.setItem("mode", dark ? "dark" : "light");
+  } catch (e) {
+    /* storage blocked: the choice just won't be remembered */
+  }
+  updateModeToggle();
+});
+updateModeToggle();
+
 // Header shadow after scrolling
 const header = document.querySelector(".site-header");
 function updateHeader() {

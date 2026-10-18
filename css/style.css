@@ -15,13 +15,20 @@
   --on-dark: #d8cbb8;
   --on-dark-strong: #e6dacb;
   --on-dark-muted: #a8998a;
+  --on-espresso: #f7f1e8;   /* text on the dark contact/footer surfaces */
+  --shadow-color: #2b1d14;
+
+  /* Base colors of the default palette; themes and dark mode are mixed from these */
+  --c-light: #f7f1e8;
+  --c-dark: #2b1d14;
+  --c-accent: #b08a4f;
   --whatsapp: #25d366;
 
   --font-head: "Playfair Display", Georgia, serif;
   --font-body: "Lato", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   --radius: 14px;
-  --shadow: 0 10px 30px color-mix(in srgb, var(--ink) 8%, transparent);
+  --shadow: 0 10px 30px color-mix(in srgb, var(--shadow-color) 8%, transparent);
   --header-h: 72px;
 }
 
@@ -29,6 +36,8 @@
    on <html>; every other tone is mixed from those 3 colors.
    No data-theme attribute = the original "Klasik" palette above. */
 html[data-theme] {
+  --on-espresso: var(--c-light);
+  --shadow-color: var(--c-dark);
   --cream: var(--c-light);
   --cream-dark: color-mix(in srgb, var(--c-light) 90%, var(--c-accent));
   --paper: color-mix(in srgb, var(--c-light) 45%, white);
@@ -42,6 +51,26 @@ html[data-theme] {
   --on-dark: color-mix(in srgb, var(--c-light) 82%, var(--c-dark));
   --on-dark-strong: color-mix(in srgb, var(--c-light) 90%, var(--c-dark));
   --on-dark-muted: color-mix(in srgb, var(--c-light) 58%, var(--c-dark));
+}
+
+/* Dark mode: the same 3 base colors, flipped. Works with every theme. */
+html[data-mode="dark"] {
+  color-scheme: dark;
+  --cream: color-mix(in srgb, var(--c-dark) 70%, black);
+  --cream-dark: color-mix(in srgb, var(--c-dark) 84%, black);
+  --paper: color-mix(in srgb, var(--c-dark) 90%, var(--c-light));
+  --ink: var(--c-light);
+  --ink-soft: color-mix(in srgb, var(--c-light) 72%, var(--c-dark));
+  --gold: color-mix(in srgb, var(--c-accent) 85%, white);
+  --gold-dark: color-mix(in srgb, var(--c-accent) 70%, white);
+  --gold-light: color-mix(in srgb, var(--c-accent) 60%, white);
+  --espresso: color-mix(in srgb, var(--c-dark) 45%, black);
+  --line: color-mix(in srgb, var(--c-dark) 72%, var(--c-light));
+  --on-dark: color-mix(in srgb, var(--c-light) 82%, var(--c-dark));
+  --on-dark-strong: color-mix(in srgb, var(--c-light) 90%, var(--c-dark));
+  --on-dark-muted: color-mix(in srgb, var(--c-light) 58%, var(--c-dark));
+  --on-espresso: var(--c-light);
+  --shadow-color: black;
 }
 
 /* ==========================================================
@@ -143,7 +172,7 @@ p { margin: 0 0 1em; }
 
 .site-header.scrolled {
   border-color: var(--line);
-  box-shadow: 0 4px 20px color-mix(in srgb, var(--ink) 5%, transparent);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--shadow-color) 5%, transparent);
 }
 
 .header-inner {
@@ -223,6 +252,24 @@ p { margin: 0 0 1em; }
 }
 
 .lang-switch button[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+
+.mode-toggle {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.mode-toggle svg { width: 18px; height: 18px; }
+.mode-toggle .icon-sun { display: none; }
+html[data-mode="dark"] .mode-toggle .icon-sun { display: block; }
+html[data-mode="dark"] .mode-toggle .icon-moon { display: none; }
 
 .menu-toggle {
   display: none;
@@ -492,14 +539,14 @@ p { margin: 0 0 1em; }
 .cards--ust .card-media + .card-body .lesson-icon {
   margin-top: -28px;
   background: var(--paper);
-  box-shadow: 0 0 0 4px var(--paper), 0 6px 16px color-mix(in srgb, var(--ink) 15%, transparent);
+  box-shadow: 0 0 0 4px var(--paper), 0 6px 16px color-mix(in srgb, var(--shadow-color) 15%, transparent);
 }
 
 /* Card design "arka": blurred photo behind the text */
 .cards--arka .card {
   border: 0;
   background: var(--espresso);
-  color: var(--cream);
+  color: var(--on-espresso);
 }
 
 .cards--arka .card-media {
@@ -528,13 +575,13 @@ p { margin: 0 0 1em; }
 .cards--arka .levels { color: var(--gold-light); }
 
 .cards--arka .lesson-icon {
-  background: color-mix(in srgb, var(--cream) 15%, transparent);
-  border: 1px solid color-mix(in srgb, var(--cream) 30%, transparent);
+  background: color-mix(in srgb, var(--on-espresso) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--on-espresso) 30%, transparent);
   backdrop-filter: blur(4px);
 }
 
-.cards--arka .tags { border-top-color: color-mix(in srgb, var(--cream) 20%, transparent); }
-.cards--arka .tag { color: var(--cream); border-color: color-mix(in srgb, var(--cream) 50%, transparent); }
+.cards--arka .tags { border-top-color: color-mix(in srgb, var(--on-espresso) 20%, transparent); }
+.cards--arka .tag { color: var(--on-espresso); border-color: color-mix(in srgb, var(--on-espresso) 50%, transparent); }
 
 .price-box {
   margin: 48px auto 0;
@@ -608,7 +655,7 @@ p { margin: 0 0 1em; }
 }
 
 /* Contact */
-.section-dark { background: var(--espresso); color: var(--cream); }
+.section-dark { background: var(--espresso); color: var(--on-espresso); }
 .section-dark .eyebrow { color: var(--gold); }
 .section-dark p { color: var(--on-dark); }
 
@@ -620,7 +667,7 @@ p { margin: 0 0 1em; }
   display: grid;
   gap: 2px;
   padding: 18px 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--cream) 15%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--on-espresso) 15%, transparent);
 }
 
 .contact-list .label {
@@ -641,7 +688,7 @@ p { margin: 0 0 1em; }
 /* ==========================================================
    Footer
    ========================================================== */
-.site-footer { background: var(--espresso); color: var(--on-dark-muted); border-top: 1px solid color-mix(in srgb, var(--cream) 10%, transparent); }
+.site-footer { background: var(--espresso); color: var(--on-dark-muted); border-top: 1px solid color-mix(in srgb, var(--on-espresso) 10%, transparent); }
 
 .footer-inner {
   display: flex;
@@ -684,7 +731,7 @@ p { margin: 0 0 1em; }
   right: 16px;
   border: 0;
   background: none;
-  color: var(--cream);
+  color: var(--on-espresso);
   font-size: 2.6rem;
   line-height: 1;
   cursor: pointer;
@@ -714,12 +761,14 @@ p { margin: 0 0 1em; }
    --pattern-strength sets how much darker (share of the dark color mixed in).
    The pattern is a mask, so its color follows the active theme.
    ========================================================== */
-/* Pattern tiles live in css/patterns.css (--pattern, --pattern-size). */
+/* Treble clef pattern, widest spacing */
 :root {
-  --pattern-strength: 16%;
+  --pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='153.92' height='177.6' viewBox='0 0 153.92 177.6'%3E%3Cg transform='translate(76.96 88.8)'%3E%3Cpath d='M1 -22 L1 18' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 -22 C7 -16 6 -10 1 -6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 -6 C-9 0 -8 12 0 12 C7 12 7 2 1 2 C-3 2 -3 7 0 8' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 18 C1 23 -5 23 -5 19' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='-4' cy='19' r='2.2'/%3E%3C/g%3E%3Cg transform='translate(0 0)'%3E%3Cpath d='M1 -22 L1 18' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 -22 C7 -16 6 -10 1 -6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 -6 C-9 0 -8 12 0 12 C7 12 7 2 1 2 C-3 2 -3 7 0 8' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 18 C1 23 -5 23 -5 19' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='-4' cy='19' r='2.2'/%3E%3C/g%3E%3Cg transform='translate(153.92 0)'%3E%3Cpath d='M1 -22 L1 18' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 -22 C7 -16 6 -10 1 -6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 -6 C-9 0 -8 12 0 12 C7 12 7 2 1 2 C-3 2 -3 7 0 8' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 18 C1 23 -5 23 -5 19' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='-4' cy='19' r='2.2'/%3E%3C/g%3E%3Cg transform='translate(0 177.6)'%3E%3Cpath d='M1 -22 L1 18' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 -22 C7 -16 6 -10 1 -6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 -6 C-9 0 -8 12 0 12 C7 12 7 2 1 2 C-3 2 -3 7 0 8' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 18 C1 23 -5 23 -5 19' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='-4' cy='19' r='2.2'/%3E%3C/g%3E%3Cg transform='translate(153.92 177.6)'%3E%3Cpath d='M1 -22 L1 18' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 -22 C7 -16 6 -10 1 -6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 -6 C-9 0 -8 12 0 12 C7 12 7 2 1 2 C-3 2 -3 7 0 8' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 18 C1 23 -5 23 -5 19' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='-4' cy='19' r='2.2'/%3E%3C/g%3E%3C/svg%3E");
+  --pattern-size: 195.36px;
+  --pattern-strength: 4%;
   /* Width of the plain, pattern-free band down the middle (0px = none).
-     It never covers more than 70% of the width, so phones keep some pattern at the edges. */
-  --pattern-band: 720px;
+     It never covers more than 70% of the width. */
+  --pattern-band: 1100px;
 }
 
 .hero,
@@ -750,6 +799,12 @@ p { margin: 0 0 1em; }
   -webkit-mask-composite: source-in;
   mask: var(--pattern) 0 0 / var(--pattern-size) repeat, var(--band-mask);
   mask-composite: intersect;
+}
+
+/* Phones and small tablets: no background pattern */
+@media (max-width: 820px) {
+  .hero::before,
+  .section:not(.section-dark)::before { display: none; }
 }
 
 /* ==========================================================
@@ -789,24 +844,3 @@ p { margin: 0 0 1em; }
 }
 
 .theme-preview button[aria-pressed="true"] { border-color: var(--ink); transform: scale(1.12); }
-
-.theme-preview-patterns {
-  flex-basis: 100%;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.theme-preview-patterns input[type="range"] { flex: 1; min-width: 0; accent-color: var(--ink); }
-
-.theme-preview-patterns select {
-  flex: 1;
-  min-width: 0;
-  padding: 4px 8px;
-  border: 1px solid var(--ink);
-  border-radius: 999px;
-  background: var(--paper);
-  color: var(--ink);
-  font: 700 0.75rem var(--font-body);
-}
