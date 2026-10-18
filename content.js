@@ -18,8 +18,10 @@ const SITE_CONTENT = {
     "phoneDisplay": "+90 500 000 00 00",
     "whatsapp": "905000000000",
     "email": "ornek@email.com",
-    "instagram": "@kullaniciadi",
-    "instagramUrl": "https://instagram.com/kullaniciadi"
+    "instagram": "@kerem.ofluoglu",
+    "instagramUrl": "https://instagram.com/kerem.ofluoglu",
+    "youtube": "@ensebatur",
+    "youtubeUrl": "https://www.youtube.com/@ensebatur"
   },
 
   "images": {
@@ -51,6 +53,7 @@ const SITE_CONTENT = {
 
   "nav": {
     "about": { "tr": "Hakkımda", "en": "About" },
+    "video": { "tr": "Tanıtım", "en": "Video" },
     "lessons": { "tr": "Dersler", "en": "Lessons" },
     "gallery": { "tr": "Galeri", "en": "Gallery" },
     "contact": { "tr": "İletişim", "en": "Contact" }
@@ -94,6 +97,20 @@ const SITE_CONTENT = {
         "text": { "tr": "6 yaştan yetişkinlere, başlangıçtan ileri seviyeye", "en": "From age 6 to adults, beginner to advanced" }
       }
     ]
+  },
+
+  "intro": {
+    "eyebrow": { "tr": "Tanıtım Videosu", "en": "Intro Video" },
+    "title": { "tr": "Stüdyomuzu yakından tanıyın", "en": "Get to know our studio" },
+    "lead": {
+      "tr": "Derslerin nasıl geçtiğini izleyin. Daha fazlası için YouTube kanalımıza ve Instagram sayfamıza göz atın.",
+      "en": "See what a lesson looks like. Find more on our YouTube channel and Instagram page."
+    },
+    // Paste the YouTube video link here, e.g. "https://www.youtube.com/watch?v=abc123XYZ"
+    "video": "",
+    "placeholder": { "tr": "Tanıtım videosu yakında burada", "en": "Intro video coming soon" },
+    "youtubeButton": { "tr": "YouTube Kanalımız", "en": "Our YouTube Channel" },
+    "instagramButton": { "tr": "Instagram'da Takip Et", "en": "Follow on Instagram" }
   },
 
   "lessons": {
@@ -208,6 +225,7 @@ const SITE_CONTENT = {
     "whatsapp": { "tr": "WhatsApp'tan Yaz", "en": "Message on WhatsApp" },
     "phone": { "tr": "Telefon", "en": "Phone" },
     "email": { "tr": "E-posta", "en": "Email" },
+    "youtube": { "tr": "YouTube", "en": "YouTube" },
     "location": { "tr": "Konum", "en": "Location" },
     "locationText": {
       "tr": "Bornova, İzmir · Online dersler tüm Türkiye'ye",

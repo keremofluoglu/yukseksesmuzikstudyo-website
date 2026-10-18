@@ -321,6 +321,55 @@ p { margin: 0 0 1em; }
   .about-grid { grid-template-columns: 0.85fr 1.15fr; gap: 80px; }
 }
 
+/* Intro video */
+.intro-video {
+  max-width: 900px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--espresso);
+  box-shadow: var(--shadow);
+}
+
+.intro-video iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+.intro-placeholder {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 16px;
+  text-align: center;
+  color: #d8cbb8;
+  background: radial-gradient(circle at 30% 30%, #5c4a3d, var(--espresso) 70%);
+  font-family: var(--font-head);
+  font-size: 1.2rem;
+}
+
+.intro-placeholder svg { width: 72px; height: 72px; color: #ff0033; opacity: 0.9; }
+
+.social-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.social-buttons svg { width: 20px; height: 20px; }
+
+.btn-youtube { background: #ff0033; color: #fff; }
+.btn-youtube:hover { background: #d4002b; }
+
+.btn-instagram {
+  background: linear-gradient(45deg, #f58529, #dd2a7b 50%, #8134af);
+  color: #fff;
+}
+.btn-instagram:hover { filter: brightness(1.08); }
+
 /* Lessons */
 .formats {
   display: grid;
@@ -582,6 +631,9 @@ p { margin: 0 0 1em; }
 }
 
 .footer-inner p { margin: 0; }
+
+.footer-social { display: flex; align-items: center; gap: 18px; }
+.footer-social svg { width: 20px; height: 20px; display: block; }
 .footer-inner a { text-decoration: none; }
 .footer-inner a:hover { color: var(--gold); }
 

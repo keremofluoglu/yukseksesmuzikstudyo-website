@@ -190,11 +190,49 @@ function renderSite(lang) {
     phone: "tel:" + site.phone,
     email: "mailto:" + site.email,
     instagram: site.instagramUrl,
+    youtube: site.youtubeUrl,
     whatsapp: "https://wa.me/" + site.whatsapp + "?text=" + encodeURIComponent(pick(CONTENT.whatsappMessage, lang))
   };
   document.querySelectorAll("[data-link]").forEach((node) => {
-    node.href = links[node.dataset.link];
+    const href = links[node.dataset.link];
+    // Hide a link (and its contact row) when its address is left empty in content.js
+    const target = node.closest(".contact-list li") || node;
+    target.hidden = !href;
+    if (href) node.href = href;
   });
+}
+
+// Accepts a full YouTube link (watch, youtu.be, shorts, embed) or a bare video ID
+function youtubeId(value) {
+  if (!value) return "";
+  const match = value.match(/(?:v=|youtu\.be\/|shorts\/|embed\/|live\/)([\w-]{11})/);
+  if (match) return match[1];
+  return /^[\w-]{11}$/.test(value.trim()) ? value.trim() : "";
+}
+
+function renderIntro(lang) {
+  const intro = CONTENT.intro;
+  const box = document.getElementById("intro-video");
+  const id = youtubeId(intro.video);
+
+  // Keep the player when switching language so the video doesn't restart
+  if (id && box.dataset.id === id && box.querySelector("iframe")) return;
+  box.dataset.id = id;
+
+  if (id) {
+    const iframe = el("iframe");
+    iframe.src = "https://www.youtube-nocookie.com/embed/" + id + "?rel=0";
+    iframe.title = pick(intro.title, lang);
+    iframe.loading = "lazy";
+    iframe.allow = "accelerometer; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+    box.replaceChildren(iframe);
+  } else {
+    const placeholder = el("div", "intro-placeholder");
+    placeholder.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-youtube"/></svg>';
+    placeholder.append(el("span", "", pick(intro.placeholder, lang)));
+    box.replaceChildren(placeholder);
+  }
 }
 
 function applyLang(lang) {
@@ -212,6 +250,7 @@ function applyLang(lang) {
   renderSite(lang);
   renderImages(lang);
   renderAbout(lang);
+  renderIntro(lang);
   renderLessons(lang);
   renderGallery(lang);
 
