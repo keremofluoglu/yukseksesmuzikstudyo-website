@@ -12,7 +12,7 @@
 const SITE_CONTENT = {
   "site": {
     "name": "Yüksek Ses Müzik Stüdyo",
-    "teacherName": "Ad Soyad",
+    "teacherName": "Büşra Ofluoğlu",
     "phone": "+905000000000",
     "phoneDisplay": "+90 500 000 00 00",
     "whatsapp": "905000000000",
