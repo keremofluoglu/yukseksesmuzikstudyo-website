@@ -20,8 +20,8 @@ const SITE_CONTENT = {
     "email": "ornek@email.com",
     "instagram": "@kerem.ofluoglu",
     "instagramUrl": "https://instagram.com/kerem.ofluoglu",
-    "youtube": "@ensebatur",
-    "youtubeUrl": "https://www.youtube.com/@ensebatur"
+    "youtube": "YouTube'da izle",
+    "youtubeUrl": "https://www.youtube.com/watch?v=OyDyOweu-PA"
   },
 
   "images": {
@@ -107,9 +107,9 @@ const SITE_CONTENT = {
       "en": "See what a lesson looks like. Find more on our YouTube channel and Instagram page."
     },
     // Paste the YouTube video link here, e.g. "https://www.youtube.com/watch?v=abc123XYZ"
-    "video": "",
+    "video": "https://www.youtube.com/watch?v=OyDyOweu-PA",
     "placeholder": { "tr": "Tanıtım videosu yakında burada", "en": "Intro video coming soon" },
-    "youtubeButton": { "tr": "YouTube Kanalımız", "en": "Our YouTube Channel" },
+    "youtubeButton": { "tr": "YouTube'da İzle", "en": "Watch on YouTube" },
     "instagramButton": { "tr": "Instagram'da Takip Et", "en": "Follow on Instagram" }
   },
 
