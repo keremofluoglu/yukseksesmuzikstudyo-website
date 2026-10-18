@@ -715,7 +715,12 @@ p { margin: 0 0 1em; }
    The pattern is a mask, so its color follows the active theme.
    ========================================================== */
 /* Pattern tiles live in css/patterns.css (--pattern, --pattern-size). */
-:root { --pattern-strength: 16%; }
+:root {
+  --pattern-strength: 16%;
+  /* Width of the plain, pattern-free band down the middle (0px = none).
+     It never covers more than 70% of the width, so phones keep some pattern at the edges. */
+  --pattern-band: 720px;
+}
 
 .hero,
 .section:not(.section-dark) {
@@ -734,8 +739,17 @@ p { margin: 0 0 1em; }
   z-index: -1;
   pointer-events: none;
   background-color: color-mix(in srgb, var(--bg), var(--ink) var(--pattern-strength));
-  -webkit-mask: var(--pattern) 0 0 / var(--pattern-size) repeat;
-  mask: var(--pattern) 0 0 / var(--pattern-size) repeat;
+  --band: min(var(--pattern-band), 70%);
+  --band-fade: min(32px, var(--pattern-band));
+  --band-mask: linear-gradient(to right,
+    #000 calc(50% - var(--band) / 2 - var(--band-fade)),
+    transparent calc(50% - var(--band) / 2),
+    transparent calc(50% + var(--band) / 2),
+    #000 calc(50% + var(--band) / 2 + var(--band-fade)));
+  -webkit-mask: var(--pattern) 0 0 / var(--pattern-size) repeat, var(--band-mask);
+  -webkit-mask-composite: source-in;
+  mask: var(--pattern) 0 0 / var(--pattern-size) repeat, var(--band-mask);
+  mask-composite: intersect;
 }
 
 /* ==========================================================

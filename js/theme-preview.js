@@ -158,10 +158,31 @@
   slider.addEventListener("input", () => setStrength(slider.value));
   strengthRow.append("Koyuluk:", slider, strengthValue);
 
-  bar.append(patternRow, strengthRow);
+  // Width of the plain band in the middle (?serit=0..1100, px)
+  const bandRow = document.createElement("label");
+  bandRow.className = "theme-preview-patterns";
+  const bandValue = document.createElement("span");
+  const bandSlider = document.createElement("input");
+  bandSlider.type = "range";
+  bandSlider.min = "0";
+  bandSlider.max = "1100";
+  bandSlider.step = "20";
+
+  function setBand(value) {
+    const v = value === null || value === "" || isNaN(value) ? 720 : Math.min(1100, Math.max(0, Number(value)));
+    root.style.setProperty("--pattern-band", v + "px");
+    bandSlider.value = v;
+    bandValue.textContent = v ? v + "px" : "yok";
+  }
+
+  bandSlider.addEventListener("input", () => setBand(bandSlider.value));
+  bandRow.append("Şerit:", bandSlider, bandValue);
+
+  bar.append(patternRow, strengthRow, bandRow);
   document.body.append(bar);
   const params = new URLSearchParams(location.search);
   setTheme(params.get("tema"));
   setPattern(params.get("desen"));
   setStrength(params.get("koyuluk"));
+  setBand(params.get("serit"));
 })();
