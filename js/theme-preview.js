@@ -1,9 +1,9 @@
 /*
  * TEMPORARY: color theme switcher for previewing palettes.
  * The choice is not saved; reloading the page returns to the default.
- * ?tema=gece (or any id below) and ?desen=yildiz in the address open a theme/pattern directly.
- * To remove: delete this file, its <script> tag in index.html and the
- * "TEMPORARY theme preview" block at the end of css/style.css.
+ * ?tema=gece, ?desen=lale, ?aralik=1..7, ?koyuluk=4..35 and ?serit=0..1100 in the address preset the controls.
+ * To remove: delete this file, css/pattern-gaps.css, its <script> tag in index.html
+ * and the "TEMPORARY theme preview" block at the end of css/style.css.
  *
  * Each theme is 3 colors: light background, dark (text and dark sections), accent.
  */
@@ -111,7 +111,16 @@
     { id: "halka", name: "Bizans Halkaları", group: "Rum / Bizans" },
     { id: "dalga", name: "Rum Dalgası", group: "Rum / Bizans" },
     { id: "mozaik", name: "Bizans Mozaiği", group: "Rum / Bizans" },
-    { id: "nota", name: "Nota", group: "Diğer" },
+    { id: "nota", name: "Nota", group: "Müzik" },
+    { id: "piyano", name: "Piyano Tuşları", group: "Müzik" },
+    { id: "porte", name: "Porte ve Notalar", group: "Müzik" },
+    { id: "solanahtari", name: "Sol Anahtarı", group: "Müzik" },
+    { id: "plak", name: "Plak", group: "Müzik" },
+    { id: "ekolayzer", name: "Ses Dalgası", group: "Müzik" },
+    { id: "gitar", name: "Gitar", group: "Müzik" },
+    { id: "mikrofon", name: "Mikrofon", group: "Müzik" },
+    { id: "kulaklik", name: "Kulaklık", group: "Müzik" },
+    { id: "notalar", name: "Karışık Notalar", group: "Müzik" },
     { id: "yok", name: "Desensiz", group: "Diğer" }
   ];
 
@@ -131,8 +140,7 @@
 
   function setPattern(id) {
     const pattern = PATTERNS.find((p) => p.id === id) || PATTERNS[0];
-    if (pattern.id === PATTERNS[0].id) root.removeAttribute("data-pattern");
-    else root.dataset.pattern = pattern.id;
+    root.dataset.pattern = pattern.id;
     select.value = pattern.id;
   }
 
@@ -178,11 +186,38 @@
   bandSlider.addEventListener("input", () => setBand(bandSlider.value));
   bandRow.append("Şerit:", bandSlider, bandValue);
 
-  bar.append(patternRow, strengthRow, bandRow);
+  // Space between motifs (?aralik=1..7, 3 = default); variants are in css/pattern-gaps.css
+  const gapsCss = document.createElement("link");
+  gapsCss.rel = "stylesheet";
+  gapsCss.href = "css/pattern-gaps.css";
+  document.head.append(gapsCss);
+
+  const GAP_LABELS = ["çok sık", "sık", "normal", "seyrek", "daha seyrek", "çok seyrek", "en seyrek"];
+  const gapRow = document.createElement("label");
+  gapRow.className = "theme-preview-patterns";
+  const gapValue = document.createElement("span");
+  const gapSlider = document.createElement("input");
+  gapSlider.type = "range";
+  gapSlider.min = "1";
+  gapSlider.max = "7";
+
+  function setGap(value) {
+    const v = Math.min(7, Math.max(1, Math.round(Number(value)) || 3));
+    if (v === 3) root.removeAttribute("data-gap");
+    else root.dataset.gap = v;
+    gapSlider.value = v;
+    gapValue.textContent = GAP_LABELS[v - 1];
+  }
+
+  gapSlider.addEventListener("input", () => setGap(gapSlider.value));
+  gapRow.append("Aralık:", gapSlider, gapValue);
+
+  bar.append(patternRow, gapRow, strengthRow, bandRow);
   document.body.append(bar);
   const params = new URLSearchParams(location.search);
   setTheme(params.get("tema"));
   setPattern(params.get("desen"));
   setStrength(params.get("koyuluk"));
   setBand(params.get("serit"));
+  setGap(params.get("aralik"));
 })();
