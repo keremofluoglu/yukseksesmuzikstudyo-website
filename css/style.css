@@ -710,6 +710,35 @@ p { margin: 0 0 1em; }
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
 /* ==========================================================
+   Background pattern: a few shades darker than the section background.
+   --pattern-strength sets how much darker (share of the dark color mixed in).
+   The pattern is a mask, so its color follows the active theme.
+   ========================================================== */
+/* Pattern tiles live in css/patterns.css (--pattern, --pattern-size). */
+:root { --pattern-strength: 16%; }
+
+.hero,
+.section:not(.section-dark) {
+  --bg: var(--cream);
+  position: relative;
+  isolation: isolate;
+}
+
+.section-alt { --bg: var(--cream-dark); }
+
+.hero::before,
+.section:not(.section-dark)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: color-mix(in srgb, var(--bg), var(--ink) var(--pattern-strength));
+  -webkit-mask: var(--pattern) 0 0 / var(--pattern-size) repeat;
+  mask: var(--pattern) 0 0 / var(--pattern-size) repeat;
+}
+
+/* ==========================================================
    TEMPORARY theme preview switcher (remove with js/theme-preview.js)
    ========================================================== */
 .theme-preview {
@@ -746,3 +775,24 @@ p { margin: 0 0 1em; }
 }
 
 .theme-preview button[aria-pressed="true"] { border-color: var(--ink); transform: scale(1.12); }
+
+.theme-preview-patterns {
+  flex-basis: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.theme-preview-patterns input[type="range"] { flex: 1; min-width: 0; accent-color: var(--ink); }
+
+.theme-preview-patterns select {
+  flex: 1;
+  min-width: 0;
+  padding: 4px 8px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font: 700 0.75rem var(--font-body);
+}

@@ -1,7 +1,7 @@
 /*
  * TEMPORARY: color theme switcher for previewing palettes.
  * The choice is not saved; reloading the page returns to the default.
- * ?tema=gece (or any id below) in the address opens a theme directly.
+ * ?tema=gece (or any id below) and ?desen=yildiz in the address open a theme/pattern directly.
  * To remove: delete this file, its <script> tag in index.html and the
  * "TEMPORARY theme preview" block at the end of css/style.css.
  *
@@ -89,6 +89,79 @@
     bar.append(btn);
   });
 
+  // Background pattern choice (?desen=<id>); tiles are in css/patterns.css
+  const PATTERNS = [
+    { id: "kilim", name: "Kilim Baklavası", group: "Türk Kilimi" },
+    { id: "elibelinde", name: "Basamaklı Baklava", group: "Türk Kilimi" },
+    { id: "kocboynuzu", name: "Koçboynuzu", group: "Türk Kilimi" },
+    { id: "turkmen", name: "Türkmen Gülü", group: "Türk Kilimi" },
+    { id: "muska", name: "Muska", group: "Türk Kilimi" },
+    { id: "suyolu", name: "Su Yolu", group: "Türk Kilimi" },
+    { id: "bereket", name: "Bereket Haçı", group: "Türk Kilimi" },
+    { id: "cintemani", name: "Çintemani", group: "Osmanlı" },
+    { id: "kaftan", name: "Kaftan Şebekesi", group: "Osmanlı" },
+    { id: "yildiz", name: "Selçuklu Yıldızı", group: "Osmanlı" },
+    { id: "rumi", name: "Rumi Kıvrımı", group: "Osmanlı" },
+    { id: "lale", name: "İznik Lalesi", group: "İznik" },
+    { id: "karanfil", name: "İznik Karanfili", group: "İznik" },
+    { id: "rozet", name: "Hatayi Rozeti", group: "İznik" },
+    { id: "saz", name: "Saz Yaprağı", group: "İznik" },
+    { id: "bulut", name: "Çin Bulutu", group: "İznik" },
+    { id: "meander", name: "Rum Meandırı", group: "Rum / Bizans" },
+    { id: "halka", name: "Bizans Halkaları", group: "Rum / Bizans" },
+    { id: "dalga", name: "Rum Dalgası", group: "Rum / Bizans" },
+    { id: "mozaik", name: "Bizans Mozaiği", group: "Rum / Bizans" },
+    { id: "nota", name: "Nota", group: "Diğer" },
+    { id: "yok", name: "Desensiz", group: "Diğer" }
+  ];
+
+  const patternRow = document.createElement("label");
+  patternRow.className = "theme-preview-patterns";
+  patternRow.append("Desen:");
+  const select = document.createElement("select");
+
+  [...new Set(PATTERNS.map((p) => p.group))].forEach((group) => {
+    const optgroup = document.createElement("optgroup");
+    optgroup.label = group;
+    PATTERNS.filter((p) => p.group === group).forEach((p) => {
+      optgroup.append(new Option(p.name, p.id));
+    });
+    select.append(optgroup);
+  });
+
+  function setPattern(id) {
+    const pattern = PATTERNS.find((p) => p.id === id) || PATTERNS[0];
+    if (pattern.id === PATTERNS[0].id) root.removeAttribute("data-pattern");
+    else root.dataset.pattern = pattern.id;
+    select.value = pattern.id;
+  }
+
+  select.addEventListener("change", () => setPattern(select.value));
+  patternRow.append(select);
+
+  // Pattern darkness (?koyuluk=5..35, percent of the dark color mixed in)
+  const strengthRow = document.createElement("label");
+  strengthRow.className = "theme-preview-patterns";
+  const strengthValue = document.createElement("span");
+  const slider = document.createElement("input");
+  slider.type = "range";
+  slider.min = "4";
+  slider.max = "35";
+
+  function setStrength(value) {
+    const v = Math.min(35, Math.max(4, Number(value) || 16));
+    root.style.setProperty("--pattern-strength", v + "%");
+    slider.value = v;
+    strengthValue.textContent = "%" + v;
+  }
+
+  slider.addEventListener("input", () => setStrength(slider.value));
+  strengthRow.append("Koyuluk:", slider, strengthValue);
+
+  bar.append(patternRow, strengthRow);
   document.body.append(bar);
-  setTheme(new URLSearchParams(location.search).get("tema"));
+  const params = new URLSearchParams(location.search);
+  setTheme(params.get("tema"));
+  setPattern(params.get("desen"));
+  setStrength(params.get("koyuluk"));
 })();
