@@ -46,7 +46,7 @@ html[data-theme] {
   --gold: var(--c-accent);
   --gold-dark: color-mix(in srgb, var(--c-accent) 72%, var(--c-dark));
   --gold-light: color-mix(in srgb, var(--c-accent) 65%, white);
-  --espresso: color-mix(in srgb, var(--c-dark) 82%, black);
+  --espresso: color-mix(in srgb, color-mix(in srgb, var(--c-dark) 82%, black) 95%, var(--c-light));
   --line: color-mix(in srgb, var(--c-light) 84%, var(--c-dark));
   --on-dark: color-mix(in srgb, var(--c-light) 82%, var(--c-dark));
   --on-dark-strong: color-mix(in srgb, var(--c-light) 90%, var(--c-dark));
@@ -56,21 +56,36 @@ html[data-theme] {
 /* Dark mode: the same 3 base colors, flipped. Works with every theme. */
 html[data-mode="dark"] {
   color-scheme: dark;
-  --cream: color-mix(in srgb, var(--c-dark) 70%, black);
-  --cream-dark: color-mix(in srgb, var(--c-dark) 84%, black);
+  /* never pure black: a little of the light color is always mixed in */
+  --cream: color-mix(in srgb, color-mix(in srgb, var(--c-dark) 70%, black) 94%, var(--c-light));
+  --cream-dark: color-mix(in srgb, color-mix(in srgb, var(--c-dark) 84%, black) 92%, var(--c-light));
   --paper: color-mix(in srgb, var(--c-dark) 90%, var(--c-light));
   --ink: var(--c-light);
   --ink-soft: color-mix(in srgb, var(--c-light) 72%, var(--c-dark));
   --gold: color-mix(in srgb, var(--c-accent) 85%, white);
   --gold-dark: color-mix(in srgb, var(--c-accent) 70%, white);
   --gold-light: color-mix(in srgb, var(--c-accent) 60%, white);
-  --espresso: color-mix(in srgb, var(--c-dark) 45%, black);
+  --espresso: color-mix(in srgb, color-mix(in srgb, var(--c-dark) 45%, black) 96%, var(--c-light));
   --line: color-mix(in srgb, var(--c-dark) 72%, var(--c-light));
   --on-dark: color-mix(in srgb, var(--c-light) 82%, var(--c-dark));
   --on-dark-strong: color-mix(in srgb, var(--c-light) 90%, var(--c-dark));
   --on-dark-muted: color-mix(in srgb, var(--c-light) 58%, var(--c-dark));
   --on-espresso: var(--c-light);
   --shadow-color: black;
+}
+
+/* Text color and size. --text-pick / --text-pick-soft (set by the theme preview)
+   override the text color in light mode only, so dark mode stays readable. */
+:root {
+  --text: var(--ink);
+  --text-soft: var(--ink-soft);
+  --body-scale: 1;
+  --heading-scale: 1;
+}
+
+html:not([data-mode="dark"]) {
+  --text: var(--text-pick, var(--ink));
+  --text-soft: var(--text-pick-soft, var(--ink-soft));
 }
 
 /* ==========================================================
@@ -80,14 +95,14 @@ html[data-mode="dark"] {
 *::before,
 *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
+html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); font-size: calc(100% * var(--body-scale)); }
 
 body {
   margin: 0;
   background: var(--cream);
-  color: var(--ink);
+  color: var(--text);
   font-family: var(--font-body);
-  font-size: 17px;
+  font-size: 1.0625rem;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
@@ -103,9 +118,9 @@ h1, h2, h3 {
   margin: 0 0 0.5em;
 }
 
-h1 { font-size: clamp(2.3rem, 5vw, 3.8rem); }
-h2 { font-size: clamp(1.9rem, 3.5vw, 2.7rem); }
-h3 { font-size: 1.45rem; }
+h1 { font-size: calc(clamp(2.3rem, 5vw, 3.8rem) * var(--heading-scale)); }
+h2 { font-size: calc(clamp(1.9rem, 3.5vw, 2.7rem) * var(--heading-scale)); }
+h3 { font-size: calc(1.45rem * var(--heading-scale)); }
 
 p { margin: 0 0 1em; }
 
@@ -332,7 +347,7 @@ html[data-mode="dark"] .mode-toggle .icon-moon { display: none; }
   align-items: center;
 }
 
-.hero .lead { font-size: 1.15rem; color: var(--ink-soft); max-width: 34em; }
+.hero .lead { font-size: 1.15rem; color: var(--text-soft); max-width: 34em; }
 
 .hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 
@@ -356,7 +371,7 @@ html[data-mode="dark"] .mode-toggle .icon-moon { display: none; }
 .section-alt { background: var(--cream-dark); }
 
 .section-head { text-align: center; max-width: 640px; margin: 0 auto 48px; }
-.section-head p:last-child { color: var(--ink-soft); }
+.section-head p:last-child { color: var(--text-soft); }
 
 @media (min-width: 900px) {
   .section { padding: 110px 0; }
@@ -367,7 +382,7 @@ html[data-mode="dark"] .mode-toggle .icon-moon { display: none; }
 
 .about-photo img { width: 100%; border-radius: var(--radius); box-shadow: var(--shadow); }
 
-.about-text > p { color: var(--ink-soft); }
+.about-text > p { color: var(--text-soft); }
 
 .highlights {
   list-style: none;
@@ -385,10 +400,32 @@ html[data-mode="dark"] .mode-toggle .icon-moon { display: none; }
 }
 
 .highlights strong { font-family: var(--font-head); font-size: 1.1rem; font-weight: 500; }
-.highlights span { color: var(--ink-soft); font-size: 0.95rem; }
+.highlights span { color: var(--text-soft); font-size: 0.95rem; }
 
 @media (min-width: 900px) {
   .about-grid { grid-template-columns: 0.85fr 1.15fr; gap: 80px; }
+}
+
+/* Music education text */
+.prose {
+  max-width: 980px;
+  margin: 0 auto;
+  color: var(--text-soft);
+}
+
+.prose p { margin: 0 0 1.2em; break-inside: avoid; }
+
+.prose p:first-child::first-letter {
+  float: left;
+  margin: 0.08em 0.12em 0 0;
+  font-family: var(--font-head);
+  font-size: 3.4em;
+  line-height: 0.8;
+  color: var(--gold-dark);
+}
+
+@media (min-width: 900px) {
+  .prose { columns: 2; column-gap: 56px; }
 }
 
 /* Intro video */
@@ -455,7 +492,7 @@ html[data-mode="dark"] .mode-toggle .icon-moon { display: none; }
 }
 
 .format h3 { font-size: 1.2rem; margin-bottom: 0.2em; }
-.format p { margin: 0; color: var(--ink-soft); }
+.format p { margin: 0; color: var(--text-soft); }
 
 .cards {
   display: grid;
@@ -490,7 +527,7 @@ html[data-mode="dark"] .mode-toggle .icon-moon { display: none; }
   padding: 32px 28px;
 }
 
-.card-body > p { color: var(--ink-soft); }
+.card-body > p { color: var(--text-soft); }
 
 .card-media img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -594,7 +631,7 @@ html[data-mode="dark"] .mode-toggle .icon-moon { display: none; }
   box-shadow: var(--shadow);
 }
 
-.price-box p { color: var(--ink-soft); }
+.price-box p { color: var(--text-soft); }
 
 .price-actions {
   display: flex;
@@ -844,3 +881,34 @@ html[data-mode="dark"] .mode-toggle .icon-moon { display: none; }
 }
 
 .theme-preview button[aria-pressed="true"] { border-color: var(--ink); transform: scale(1.12); }
+
+.theme-preview-row {
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.theme-preview-row input[type="range"] { flex: 1; min-width: 0; accent-color: var(--ink); }
+.theme-preview-row input[type="color"] { width: 30px; height: 26px; padding: 0; border: 0; background: none; cursor: pointer; }
+
+.theme-preview .theme-preview-row .text-swatch {
+  width: 22px;
+  height: 22px;
+  background: var(--sw);
+  box-shadow: inset 0 0 0 2px var(--paper);
+}
+
+.theme-preview .theme-preview-row .text-reset {
+  width: auto;
+  height: auto;
+  padding: 2px 10px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: none;
+  font: 700 0.72rem var(--font-body);
+  color: var(--ink);
+}

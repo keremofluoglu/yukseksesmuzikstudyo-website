@@ -201,6 +201,29 @@ const SITE_CONTENT = {
     "whatsappLabel": { "tr": "WhatsApp'tan Yaz", "en": "Message on WhatsApp" }
   },
 
+  "education": {
+    "eyebrow": { "tr": "Müzik Eğitimi", "en": "Music Education" },
+    "title": { "tr": "Neden müzik eğitimi?", "en": "Why learn music?" },
+    "paragraphs": [
+      {
+        "tr": "Müzik eğitimi yalnızca bir enstrüman çalmayı öğrenmek değildir. Düzenli çalışma; dikkati, sabrı ve özgüveni birlikte geliştirir. Bir parçayı baştan sona çalabilmenin verdiği his, öğrencinin hayatın başka alanlarında da \"yapabilirim\" demesini kolaylaştırır.",
+        "en": "Music education is about more than learning to play an instrument. Regular practice builds focus, patience and confidence together. The feeling of playing a piece from start to finish makes it easier for students to say \"I can do this\" in other parts of life too."
+      },
+      {
+        "tr": "Derslerde önce öğrenciyi tanırım: neyi sevdiğini, nasıl öğrendiğini ve neyi hedeflediğini. Doğru duruş, nefes, ritim ve nota okuma gibi temeller, öğrencinin sevdiği parçalarla birlikte ilerler. Böylece çalışmak bir zorunluluk olmaktan çıkar, merak edilen şarkıya giden yola dönüşür.",
+        "en": "I start by getting to know each student: what they love, how they learn and what they are aiming for. Foundations such as posture, breathing, rhythm and reading music develop alongside the pieces they enjoy. Practice stops being a chore and becomes the road to the song they want to play."
+      },
+      {
+        "tr": "Çocuklar için dersler oyun ve ritim çalışmalarıyla başlar; kulak ve el koordinasyonu doğal bir şekilde gelişir. Yetişkinler için ise başlamak için hiçbir zaman geç değildir. Hedef ister bir hobi, ister sahne, ister konservatuvar sınavı olsun, program kişiye özel hazırlanır.",
+        "en": "For children, lessons begin with games and rhythm exercises, so the ear and hand coordination develop naturally. For adults, it is never too late to start. Whether the goal is a hobby, the stage or a conservatory audition, the program is built around the person."
+      },
+      {
+        "tr": "Her dersin sonunda bir sonraki derse kadar neyin çalışılacağını birlikte belirleriz. Kısa ama düzenli çalışma, uzun ve seyrek çalışmadan çok daha fazla ilerletir. Online derslerde de aynı yöntemle, Türkiye'nin her yerinden birebir ilerlemek mümkün.",
+        "en": "At the end of every lesson we agree on what to practise before the next one. Short, regular practice gets you much further than long, occasional sessions. Online lessons follow the same method, so you can progress one-on-one from anywhere in Türkiye."
+      }
+    ]
+  },
+
   "gallery": {
     "eyebrow": { "tr": "Galeri", "en": "Gallery" },
     "title": { "tr": "Derslerden ve konserlerden", "en": "From lessons and concerts" },

@@ -60,6 +60,9 @@ function renderAbout(lang) {
   const paragraphs = document.getElementById("about-paragraphs");
   paragraphs.replaceChildren(...about.paragraphs.map((p) => el("p", "", pick(p, lang))));
 
+  const education = document.getElementById("education-paragraphs");
+  education.replaceChildren(...CONTENT.education.paragraphs.map((p) => el("p", "", pick(p, lang))));
+
   const highlights = document.getElementById("about-highlights");
   highlights.replaceChildren(...about.highlights.map((h) => {
     const li = el("li");

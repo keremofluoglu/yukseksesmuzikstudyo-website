@@ -6,10 +6,17 @@
  * "TEMPORARY theme preview" block at the end of css/style.css.
  *
  * Each theme is 3 colors: light background, dark (text and dark sections), accent.
+ * Also previews text color (light mode only) and text/heading sizes.
  */
 (function () {
   const THEMES = [
     { id: "klasik", name: "Klasik", scheme: "analog, sıcak kahve", light: "#f7f1e8", dark: "#2b1d14", accent: "#b08a4f" },
+    { id: "murekkep", name: "Kağıt & Mürekkep", scheme: "siyah-beyaz, sıcak beyaz + altın", light: "#f5f3ee", dark: "#1a1a1a", accent: "#a8874f" },
+    { id: "komurgri", name: "Kırık Beyaz & Kömür", scheme: "siyah-beyaz, gri vurgu", light: "#f6f6f4", dark: "#1c1c1c", accent: "#7a7a7a" },
+    { id: "piyanokey", name: "Piyano", scheme: "siyah-beyaz + kırmızı vurgu", light: "#f8f7f4", dark: "#161616", accent: "#a3242a" },
+    { id: "gumus", name: "Gümüş", scheme: "siyah-beyaz, soğuk gri", light: "#f2f3f5", dark: "#1b1d20", accent: "#8c96a1" },
+    { id: "fildisi", name: "Fildişi & Antrasit", scheme: "siyah-beyaz, fildişi + koyu gri", light: "#faf8f1", dark: "#262626", accent: "#555555" },
+    { id: "kontrast", name: "Yüksek Kontrast", scheme: "siyaha ve beyaza en yakın", light: "#fafafa", dark: "#121212", accent: "#3c3c3c" },
     { id: "gece", name: "Gece", scheme: "tamamlayıcı: lacivert + kehribar", light: "#f4f1ea", dark: "#1c2541", accent: "#e09f3e" },
     { id: "bordo", name: "Bordo", scheme: "analog: bordo + kiremit", light: "#f8efe9", dark: "#4a1420", accent: "#c96f53" },
     { id: "zeytin", name: "Zeytin", scheme: "tamamlayıcı: zeytin + bakır", light: "#f3f2ea", dark: "#2f3b2a", accent: "#c8763f" },
@@ -71,7 +78,7 @@
     scheme.textContent = "· " + theme.scheme;
     label.append(scheme);
 
-    bar.querySelectorAll("button").forEach((btn) => {
+    bar.querySelectorAll("button[data-theme]").forEach((btn) => {
       btn.setAttribute("aria-pressed", String(btn.dataset.theme === theme.id));
     });
   }
@@ -88,6 +95,76 @@
     btn.addEventListener("click", () => setTheme(theme.id));
     bar.append(btn);
   });
+
+  // Text color (light mode only) and text sizes
+  function row(labelText) {
+    const r = document.createElement("div");
+    r.className = "theme-preview-row";
+    r.append(labelText);
+    bar.append(r);
+    return r;
+  }
+
+  const colorRow = row("Yazı rengi:");
+  const TEXT_COLORS = ["#121212", "#1f1f1f", "#2e2e2e", "#404040", "#2b1d14", "#1c2433"];
+
+  function setTextColor(color) {
+    if (color) {
+      root.style.setProperty("--text-pick", color);
+      root.style.setProperty("--text-pick-soft", "color-mix(in srgb, " + color + " 80%, var(--cream))");
+    } else {
+      root.style.removeProperty("--text-pick");
+      root.style.removeProperty("--text-pick-soft");
+    }
+    colorRow.querySelectorAll(".text-swatch").forEach((btn) => {
+      btn.setAttribute("aria-pressed", String(btn.dataset.color === color));
+    });
+  }
+
+  const reset = document.createElement("button");
+  reset.type = "button";
+  reset.className = "text-reset";
+  reset.textContent = "Tema";
+  reset.addEventListener("click", () => setTextColor(null));
+  colorRow.append(reset);
+
+  TEXT_COLORS.forEach((color) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "text-swatch";
+    btn.dataset.color = color;
+    btn.title = color;
+    btn.style.setProperty("--sw", color);
+    btn.addEventListener("click", () => setTextColor(color));
+    colorRow.append(btn);
+  });
+
+  const picker = document.createElement("input");
+  picker.type = "color";
+  picker.value = "#1f1f1f";
+  picker.title = "Başka bir renk seç";
+  picker.addEventListener("input", () => setTextColor(picker.value));
+  colorRow.append(picker);
+
+  function slider(labelText, cssVar, min, max) {
+    const r = row(labelText);
+    const input = document.createElement("input");
+    input.type = "range";
+    input.min = min;
+    input.max = max;
+    input.step = 5;
+    input.value = 100;
+    const value = document.createElement("span");
+    value.textContent = "%100";
+    input.addEventListener("input", () => {
+      root.style.setProperty(cssVar, input.value / 100);
+      value.textContent = "%" + input.value;
+    });
+    r.append(input, value);
+  }
+
+  slider("Yazı boyutu:", "--body-scale", 85, 130);
+  slider("Başlık boyutu:", "--heading-scale", 75, 130);
 
   document.body.append(bar);
   setTheme(new URLSearchParams(location.search).get("tema"));
